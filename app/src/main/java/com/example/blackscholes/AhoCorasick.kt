@@ -4,21 +4,21 @@ import androidx.lifecycle.ViewModel
 import java.util.*
 
 class AhoCorasick() : ViewModel() {
-    var MAXS = 500
+    private var MAXS = 500
 
-    var MAXC = 26
+    private var MAXC = 26
 
-    var out = IntArray(MAXS)
+    private var out = IntArray(MAXS)
 
-    var f = IntArray(MAXS)
+    private var f = IntArray(MAXS)
 
-    var g = Array(MAXS) {
+    private var g = Array(MAXS) {
         IntArray(
             MAXC
         )
     }
 
-    fun buildMatchingMachine(arr: Array<String>, k: Int): Int {
+    private fun buildMatchingMachine(arr: Array<String>, k: Int): Int {
 
         Arrays.fill(out, 0)
 
@@ -78,7 +78,7 @@ class AhoCorasick() : ViewModel() {
         return states
     }
 
-    fun findNextState(currentState: Int, nextInput: Char): Int {
+    private fun findNextState(currentState: Int, nextInput: Char): Int {
         var answer = currentState
         val ch = nextInput - 'a'
 
