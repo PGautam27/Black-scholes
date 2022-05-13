@@ -1,9 +1,19 @@
 package com.example.blackscholes
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.util.*
 
 class AhoCorasick() : ViewModel() {
+
+    private var _arr = MutableLiveData<Array<String>>()
+    var arr : MutableList<String>? = _arr.value?.toMutableList()
+
+    private var _inputString = MutableLiveData<String>()
+
+    private var _inpuArray = MutableLiveData<Array<String>>()
+
     private var MAXS = 500
 
     private var MAXC = 26
@@ -16,6 +26,12 @@ class AhoCorasick() : ViewModel() {
         IntArray(
             MAXC
         )
+    }
+
+    fun inputValues(string:String, list:List<String>){
+        _inpuArray.value = list.toTypedArray()
+        _inputString.value = string
+        searchWords(_inpuArray.value!!, _inpuArray.value!!.size, _inputString.value!!)
     }
 
     private fun buildMatchingMachine(arr: Array<String>, k: Int): Int {
@@ -86,7 +102,7 @@ class AhoCorasick() : ViewModel() {
         return g[answer][ch]
     }
 
-    fun searchWords(
+    private fun searchWords(
         arr: Array<String>, k: Int,
         text: String
     ) {
@@ -94,7 +110,7 @@ class AhoCorasick() : ViewModel() {
         buildMatchingMachine(arr, k)
 
         var currentState = 0
-
+        var li : List<String>
         for (i in text.indices) {
             currentState = findNextState(
                 currentState,
@@ -105,6 +121,8 @@ class AhoCorasick() : ViewModel() {
 
             for (j in 0 until k) {
                 if (out[currentState] and (1 shl j) > 0) {
+                    _arr.value?.set(j,"""Word ${arr[j]} appears from ${i - arr[j].length + 1} to $i""")
+//                    _list.value = _list.value?.plus("""Word ${arr[j]} appears from ${i - arr[j].length + 1} to $i""")
                     print(
                         """Word ${arr[j]} appears from ${i - arr[j].length + 1} to $i"""
                     )
