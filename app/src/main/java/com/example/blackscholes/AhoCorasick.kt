@@ -8,6 +8,7 @@ import java.util.*
 class AhoCorasick() : ViewModel() {
 
     private var _arr = MutableLiveData<Array<String>>()
+    var arr1 : MutableLiveData<Array<String>> = _arr
     var arr : MutableList<String>? = _arr.value?.toMutableList()
 
     private var _inputString = MutableLiveData<String>()
