@@ -1,8 +1,9 @@
 package com.example.blackscholes
 
+import androidx.lifecycle.ViewModel
 import java.util.*
 
-internal object GFG {
+class AhoCorasick() : ViewModel() {
     var MAXS = 500
 
     var MAXC = 26
@@ -112,11 +113,11 @@ internal object GFG {
         }
     }
 
-    @JvmStatic
-    fun main(args: Array<String>) {
-        val arr = arrayOf("he", "she", "hers", "his")
-        val text = "ahishers"
-        val k = arr.size
-        searchWords(arr, k, text)
-    }
+//    @JvmStatic
+//    fun main(args: Array<String>) {
+//        val arr = arrayOf("he", "she", "hers", "his")
+//        val text = "ahishers"
+//        val k = arr.size
+//        searchWords(arr, k, text)
+//    }
 }
