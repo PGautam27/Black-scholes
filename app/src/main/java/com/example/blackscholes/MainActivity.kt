@@ -16,6 +16,9 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.blackscholes.ui.theme.BlackScholesTheme
+import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
+import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.flowlayout.MainAxisAlignment
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,21 +65,29 @@ class MainActivity : ComponentActivity() {
                     }) {
                         Text(text = "Click Me to view the words")
                     }
-                    Box(
+                    FlowRow(
                         modifier = Modifier
-                            .width(LocalConfiguration.current.screenWidthDp.dp - 40.dp)
-                            .height(
-                                LocalConfiguration.current.screenHeightDp.dp / 6
-                            )
-                    ) {
-                        Text(text = "HIHIHI")
-//                        for (i in array!!) {
-//                            Text(text = i)
-//                            Spacer(modifier = Modifier.padding(LocalConfiguration.current.screenHeightDp.dp / 45))
-//                        }
+                            .width(LocalConfiguration.current.screenWidthDp.dp),
+                        mainAxisSpacing = 20.dp,
+                        crossAxisAlignment = FlowCrossAxisAlignment.Center,
+                        mainAxisAlignment = MainAxisAlignment.Center,
+                        crossAxisSpacing = 5.dp,
+
+                        ) {
+                        if (list?.get(0)==""){
+                            return@FlowRow
+                        }
+                        list?.forEach { it ->
+                            text(it = it)
+                        }
                     }
                 }
             }
         }
     }
+}
+
+@Composable
+fun text(it:String) {
+    Text(text = it)
 }
