@@ -7,9 +7,12 @@ import java.util.*
 
 class AhoCorasick() : ViewModel() {
 
-    private var _arr = MutableLiveData<Array<String>>()
-    var arr1 : MutableLiveData<Array<String>> = _arr
-    var arr : MutableList<String>? = _arr.value?.toMutableList()
+//    private var _arr = MutableLiveData<Array<String>>()
+//    var arr1 : MutableLiveData<Array<String>> = _arr
+//    var arr : MutableList<String>? = _arr.value?.toMutableList()
+
+    private var _list = MutableLiveData<List<String>>()
+    var list: LiveData<List<String>> = _list
 
     private var _inputString = MutableLiveData<String>()
 
@@ -47,8 +50,8 @@ class AhoCorasick() : ViewModel() {
             val word = arr[i]
             var currentState = 0
 
-            for (j in 0 until word.length) {
-                val ch = word[j] - 'a'
+            for (element in word) {
+                val ch = element - 'a'
 
                 if (g[currentState][ch] == -1) g[currentState][ch] = states++
                 currentState = g[currentState][ch]
@@ -111,7 +114,6 @@ class AhoCorasick() : ViewModel() {
         buildMatchingMachine(arr, k)
 
         var currentState = 0
-        var li : List<String>
         for (i in text.indices) {
             currentState = findNextState(
                 currentState,
@@ -122,11 +124,12 @@ class AhoCorasick() : ViewModel() {
 
             for (j in 0 until k) {
                 if (out[currentState] and (1 shl j) > 0) {
-                    _arr.value?.set(j,"""Word ${arr[j]} appears from ${i - arr[j].length + 1} to $i""")
+//                    _arr.value?.set(j,"""Word ${arr[j]} appears from ${i - arr[j].length + 1} to $i""")
 //                    _list.value = _list.value?.plus("""Word ${arr[j]} appears from ${i - arr[j].length + 1} to $i""")
-                    print(
-                        """Word ${arr[j]} appears from ${i - arr[j].length + 1} to $i"""
-                    )
+                    _list.value = _list.value.orEmpty() + """Word ${arr[j]} appears from ${i - arr[j].length + 1} to $i"""
+//                    print(
+//                        """Word ${arr[j]} appears from ${i - arr[j].length + 1} to $i"""
+//                    )
                 }
             }
         }

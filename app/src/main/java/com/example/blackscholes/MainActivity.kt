@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             BlackScholesTheme {
                 val viewModel: AhoCorasick = AhoCorasick()
-                val array by viewModel.arr1.observeAsState()
+                val list by viewModel.list.observeAsState()
                 val textValue = remember {
                     mutableStateOf("")
                 }
@@ -42,52 +42,41 @@ class MainActivity : ComponentActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(text = "Input your String")
-                    Spacer(modifier = Modifier.padding(LocalConfiguration.current.screenHeightDp.dp/45))
-                    OutlinedTextField(value = textValue.value, onValueChange = {textValue.value = it})
-                    Spacer(modifier = Modifier.padding(LocalConfiguration.current.screenHeightDp.dp/30))
+                    Spacer(modifier = Modifier.padding(LocalConfiguration.current.screenHeightDp.dp / 45))
+                    OutlinedTextField(
+                        value = textValue.value,
+                        onValueChange = { textValue.value = it })
+                    Spacer(modifier = Modifier.padding(LocalConfiguration.current.screenHeightDp.dp / 30))
                     Text(text = "Input your required set of strings")
-                    Spacer(modifier = Modifier.padding(LocalConfiguration.current.screenHeightDp.dp/45))
-                    OutlinedTextField(value = listValue.value, onValueChange = {listValue.value = it})
-                    Spacer(modifier = Modifier.padding(LocalConfiguration.current.screenHeightDp.dp/45))
+                    Spacer(modifier = Modifier.padding(LocalConfiguration.current.screenHeightDp.dp / 45))
+                    OutlinedTextField(
+                        value = listValue.value,
+                        onValueChange = { listValue.value = it })
+                    Spacer(modifier = Modifier.padding(LocalConfiguration.current.screenHeightDp.dp / 45))
                     Button(onClick = {
                         val li = listValue.value.split(" ".toRegex())
-                        li.forEachIndexed{ i, s ->
-                            listValue1.add(i,s)
+                        li.forEachIndexed { i, s ->
+                            listValue1.add(i, s)
                         }
-                        viewModel.inputValues(textValue.value,listValue1)
+                        viewModel.inputValues(textValue.value, listValue1)
                     }) {
                         Text(text = "Click Me to view the words")
                     }
-                    if (boolValue.value){
-                        Box(
-                            modifier = Modifier
-                                .width(LocalConfiguration.current.screenWidthDp.dp - 40.dp)
-                                .height(
-                                    LocalConfiguration.current.screenHeightDp.dp / 6
-                                )
-                        ){
-                            Text(text = "HIHIHI")
-                            for (i in array!!){
-                                Text(text = i)
-                                Spacer(modifier = Modifier.padding(LocalConfiguration.current.screenHeightDp.dp/45))
-
-                            }
+                    Box(
+                        modifier = Modifier
+                            .width(LocalConfiguration.current.screenWidthDp.dp - 40.dp)
+                            .height(
+                                LocalConfiguration.current.screenHeightDp.dp / 6
+                            )
+                    ) {
+                        Text(text = "HIHIHI")
+//                        for (i in array!!) {
+//                            Text(text = i)
+//                            Spacer(modifier = Modifier.padding(LocalConfiguration.current.screenHeightDp.dp / 45))
+//                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    BlackScholesTheme {
-        Greeting("Android")
     }
 }
